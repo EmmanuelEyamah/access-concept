@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Access Concept",
+    "slug": "access-concept",
+    "scheme": "accessconcept",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/access-app-icon.png",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "supportsTablet": false
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0B0B0D",
+        "foregroundImage": "./assets/access-app-icon.png"
+      }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#0B0B0D"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
