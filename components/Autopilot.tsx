@@ -80,6 +80,66 @@ export const Autopilot = () => {
       return;
     }
 
+    // "film": one continuous run for the comparison video. MARK:<name> lines let the recorder note when each scene starts.
+    if (AUTOPILOT === "film") {
+      const mark = (name: string) => console.log(`MARK:${name}`);
+      const { cue } = useBankStore.getState();
+      mark("home");
+      at(3400, () => {
+        mark("menu");
+        cueServices();
+      });
+      at(6200, cueServices);
+      at(7000, () => {
+        mark("send");
+        router.push("/transfer");
+      });
+      at(9400, () => {
+        mark("amount");
+        setRecipient(RECIPIENTS[0]);
+        router.push("/transfer/amount");
+      });
+      [2, 25, 250, 2500, 25000].forEach((value, i) => at(10200 + i * 240, () => setAmount(value)));
+      at(12000, () => {
+        mark("review");
+        router.push("/transfer/review");
+      });
+      at(13600, cueSend);
+      at(16400, () => mark("success"));
+      at(19600, () => {
+        mark("help");
+        router.dismissAll();
+        router.push("/support");
+      });
+      at(22400, () => {
+        mark("profile");
+        router.back();
+        router.navigate("/profile");
+      });
+      at(26000, () => {
+        mark("cards");
+        router.navigate("/cards");
+      });
+      at(27600, () => cue("autoFlip"));
+      at(29600, () => cue("autoFlip"));
+      at(30800, () => {
+        mark("history");
+        router.navigate("/history");
+      });
+      at(32200, () => cue("autoFilter"));
+      at(34600, () => cue("autoFilter"));
+      at(35400, () => {
+        mark("bills");
+        router.push("/bills");
+      });
+      at(38000, () => {
+        mark("airtime");
+        router.push("/bills/airtime");
+      });
+      at(40800, () => mark("end"));
+      return;
+    }
+
     if (AUTOPILOT === "check") {
       const mark = (name: string) => console.log(`SHOT:${name}`);
       const { cue } = useBankStore.getState();
