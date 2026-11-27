@@ -40,7 +40,12 @@ export const SlideToSend = ({ label, auto = 0, onDone }: SlideToSendProps) => {
     () =>
       PanResponder.create({
         onStartShouldSetPanResponder: () => !fired.current,
+        onStartShouldSetPanResponderCapture: () => !fired.current,
         onMoveShouldSetPanResponder: () => !fired.current,
+        onMoveShouldSetPanResponderCapture: () => !fired.current,
+        // Once a drag has started nothing else may take it: not a scroll view, not a navigation gesture.
+        onPanResponderTerminationRequest: () => false,
+        onShouldBlockNativeResponder: () => true,
         onPanResponderGrant: () => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         },
@@ -82,7 +87,7 @@ export const SlideToSend = ({ label, auto = 0, onDone }: SlideToSendProps) => {
   const sweep = useAnimatedStyle(() => ({ opacity: interpolate(x.value, [0, 20], [1, 0], "clamp"), transform: [{ translateX: interpolate(shimmer.value, [0, 1], [-90, 340]) }, { skewX: "-18deg" }] }));
 
   return (
-    <View style={styles.track} onLayout={onLayout}>
+    <View style={styles.track} onLayout={onLayout} {...responder.panHandlers}>
       <Animated.View style={[styles.fill, fill]} />
       <View style={styles.center} pointerEvents="none">
         <Animated.Text style={[styles.label, text]}>{label}</Animated.Text>
@@ -91,7 +96,7 @@ export const SlideToSend = ({ label, auto = 0, onDone }: SlideToSendProps) => {
       <View style={styles.sweepClip} pointerEvents="none">
         <Animated.View style={[styles.sweep, sweep]} />
       </View>
-      <Animated.View style={[styles.knob, knob]} {...responder.panHandlers}>
+      <Animated.View style={[styles.knob, knob]} pointerEvents="none">
         <CaretDoubleRight size={22} color="#FFFFFF" weight="bold" />
       </Animated.View>
     </View>

@@ -31,7 +31,7 @@ const RootLayout = () => {
         <Stage>
           <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg } }}>
             <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="transfer" options={{ animation: "slide_from_bottom" }} />
+            <Stack.Screen name="transfer" options={{ animation: "slide_from_bottom", gestureEnabled: false, fullScreenGestureEnabled: false }} />
             <Stack.Screen name="support" options={{ animation: "slide_from_right" }} />
             <Stack.Screen name="add-money" options={{ animation: "slide_from_bottom" }} />
             <Stack.Screen name="bills" options={{ animation: "slide_from_bottom" }} />

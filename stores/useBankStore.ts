@@ -21,6 +21,8 @@ interface BankStore {
   setAmount: (amount: number) => void;
   /** Moves the money: the balance drops and the transfer appears at the top of the list. */
   commit: () => void;
+  /** Records a bill or airtime payment: it comes off the balance and joins the history. Returns the new id. */
+  pay: (payment: Pick<Transaction, "title" | "note" | "amount" | "category" | "brand">) => string;
   resetDraft: () => void;
   cueSend: () => void;
   cueServices: () => void;
@@ -30,6 +32,11 @@ interface BankStore {
 const EMPTY: TransferDraft = { recipient: null, amount: 0, note: "" };
 
 export const useBankStore = create<BankStore>()((set) => ({
+  pay: (payment) => {
+    const id = `paid-${Date.now()}`;
+    set((s) => ({ balance: s.balance - payment.amount, transactions: [{ ...payment, id, kind: "out", daysAgo: 0, time: "Now" }, ...s.transactions] }));
+    return id;
+  },
   phase: "splash",
   balance: OPENING_BALANCE,
   hidden: false,

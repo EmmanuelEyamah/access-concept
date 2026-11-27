@@ -34,7 +34,7 @@ const Key = ({ value, onPress }: KeyProps) => {
         onPress(value);
       }}
     >
-      <Animated.View style={[styles.key, style]}>{value === "back" ? <Backspace size={26} color={colors.text} weight="regular" /> : <Text style={styles.keyText}>{value}</Text>}</Animated.View>
+      <Animated.View style={[styles.key, style]}>{value === "back" ? <Backspace size={30} color={colors.text} weight="regular" /> : <Text style={styles.keyText}>{value}</Text>}</Animated.View>
     </Pressable>
   );
 };
@@ -126,21 +126,21 @@ const styles = StyleSheet.create({
   toBank: { fontFamily: fonts.regular, fontSize: 11, color: colors.muted, marginTop: 1 },
   middle: { flex: 1, alignItems: "center", justifyContent: "center", paddingHorizontal: 24 },
   figure: { flexDirection: "row", alignItems: "center", justifyContent: "center" },
-  currency: { fontFamily: fonts.semibold, fontSize: 34, color: colors.muted, marginRight: 4 },
-  amount: { fontFamily: fonts.bold, fontSize: 68, letterSpacing: -3, color: colors.text, fontVariant: ["tabular-nums"] },
+  currency: { fontFamily: fonts.semibold, fontSize: 38, color: colors.muted, marginRight: 4 },
+  amount: { fontFamily: fonts.bold, fontSize: 76, letterSpacing: -3.4, color: colors.text, fontVariant: ["tabular-nums"] },
   dim: { color: colors.faint },
   over: { color: colors.bad },
   after: { fontFamily: fonts.regular, fontSize: 14.5, color: colors.muted, marginTop: 2, textAlign: "center" },
-  chips: { flexDirection: "row", gap: 8, paddingHorizontal: 20, marginBottom: 14 },
+  chips: { flexDirection: "row", gap: 8, paddingHorizontal: 20, marginBottom: 8 },
   chip: { height: 40, borderRadius: 20, backgroundColor: colors.surface, alignItems: "center", justifyContent: "center" },
   chipOn: { backgroundColor: colors.text },
   chipText: { fontFamily: fonts.medium, fontSize: 13, color: colors.text, fontVariant: ["tabular-nums"] },
   chipTextOn: { color: "#0B0B0D" },
-  pad: { flexDirection: "row", flexWrap: "wrap", paddingHorizontal: 22 },
-  keySlot: { width: "33.333%", height: 62, alignItems: "center", justifyContent: "center" },
-  key: { width: 88, height: 56, borderRadius: 28, alignItems: "center", justifyContent: "center" },
-  keyText: { fontFamily: fonts.medium, fontSize: 27, color: colors.text },
-  cta: { marginHorizontal: 20, marginTop: 8, height: 56, borderRadius: 28, backgroundColor: colors.accent, alignItems: "center", justifyContent: "center" },
+  pad: { flexDirection: "row", flexWrap: "wrap", paddingHorizontal: 14 },
+  keySlot: { width: "33.333%", height: 80, alignItems: "center", justifyContent: "center" },
+  key: { width: 104, height: 70, borderRadius: 35, alignItems: "center", justifyContent: "center" },
+  keyText: { fontFamily: fonts.medium, fontSize: 31, color: colors.text },
+  cta: { marginHorizontal: 20, marginTop: 4, height: 56, borderRadius: 28, backgroundColor: colors.accent, alignItems: "center", justifyContent: "center" },
   ctaOff: { backgroundColor: colors.surface },
   ctaText: { fontFamily: fonts.semibold, fontSize: 16.5, color: "#FFFFFF" },
   ctaTextOff: { color: colors.faint },

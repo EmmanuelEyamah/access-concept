@@ -19,6 +19,7 @@ import { PinSheet } from "@/components/ui/PinSheet";
 import { Press } from "@/components/ui/Press";
 import { TopBar } from "@/components/ui/TopBar";
 import { BILLERS, BILL_CATEGORIES } from "@/constants/data";
+import { useBankStore } from "@/stores/useBankStore";
 import { colors, fonts, radius } from "@/utils/theme";
 
 const ICONS: ComponentType<IconProps>[] = [
@@ -35,6 +36,7 @@ const ICONS: ComponentType<IconProps>[] = [
 /** Pay bills: eight kinds of bill up top, then the billers people actually pay, with their real logos. */
 export const Bills = () => {
   const [pin, setPin] = useState(false);
+  const pay = useBankStore((s) => s.pay);
   return (
     <View style={styles.screen}>
       <TopBar title="Pay bills" />
@@ -115,14 +117,8 @@ export const Bills = () => {
         onClose={() => setPin(false)}
         onDone={() => {
           setPin(false);
-          router.replace({
-            pathname: "/done",
-            params: {
-              title: "DStv paid",
-              amount: "19000",
-              line: "Compact · renewed for 30 days",
-            },
-          });
+          const id = pay({ title: "DStv", note: "Compact plan", amount: 19000, category: "bills", brand: "dstv" });
+          router.replace({ pathname: "/done", params: { title: "DStv paid", amount: "19000", line: "Compact · renewed for 30 days", id } });
         }}
       />
     </View>

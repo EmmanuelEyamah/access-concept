@@ -12,6 +12,7 @@ import { TopBar } from "@/components/ui/TopBar";
 import { BRANDS, type BrandKey } from "@/constants/assets";
 import { AIRTIME_AMOUNTS, MY_NUMBER, NETWORKS } from "@/constants/data";
 import { naira } from "@/utils/format";
+import { useBankStore } from "@/stores/useBankStore";
 import { colors, fonts, radius } from "@/utils/theme";
 
 type Network = (typeof NETWORKS)[number];
@@ -86,6 +87,7 @@ export const Airtime = () => {
   const [network, setNetwork] = useState<Network>(detect(MY_NUMBER) ?? NETWORKS[0]);
   const [amount, setAmount] = useState<number>(1000);
   const [pin, setPin] = useState(false);
+  const pay = useBankStore((s) => s.pay);
   const manual = useRef(false);
   const pop = useSharedValue(1);
 
@@ -175,7 +177,8 @@ export const Airtime = () => {
         onClose={() => setPin(false)}
         onDone={() => {
           setPin(false);
-          router.replace({ pathname: "/done", params: { title: "Airtime sent", amount: String(amount), line: `${network.name} · ${phone}` } });
+          const id = pay({ title: network.name, note: `Airtime for ${phone}`, amount, category: "airtime", brand: network.brand });
+          router.replace({ pathname: "/done", params: { title: "Airtime sent", amount: String(amount), line: `${network.name} · ${phone}`, id } });
         }}
       />
     </View>
